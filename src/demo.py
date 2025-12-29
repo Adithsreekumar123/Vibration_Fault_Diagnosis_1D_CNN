@@ -28,10 +28,14 @@ def create_windows(signal, window_size):
 
 # ---------------- DEMO ----------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "best_cnn_model.keras")
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "cwru_paderborn_ft.keras")
 DATA_PATH  = os.path.join(BASE_DIR, "..", "data", "selected_mat", "210.mat")
 
 def run_demo():
+    if not os.path.exists(MODEL_PATH):
+        raise FileNotFoundError(
+            f"Model not found at {MODEL_PATH}. Expected the fine-tuned model 'models/cwru_paderborn_ft.keras'."
+        )
     model = load_model(MODEL_PATH)
 
     signal = load_de_signal(DATA_PATH)
